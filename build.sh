@@ -1,5 +1,5 @@
-g++ -O3 -c cpuid_x86.cpp
-g++ -O3 -o cpuid_x86 cpuid_x86.o
-./cpuid_x86 > gen.sh
-chmod 744 gen.sh
-./gen.sh
+as -march=armv8.2-a+fp16 -o cpu_fp_cpi_kernel_aarch64.o cpu_fp_cpi_kernel_aarch64.s
+as -march=armv8.2-a+fp16 -o cpu_fp_lat_kernel_aarch64.o cpu_fp_lat_kernel_aarch64.s
+gcc -O3 -c cpufp_aarch64.c
+gcc -O3 -c smtl.c
+gcc -O3 -pthread -o cpufp cpufp_aarch64.o smtl.o cpu_fp_cpi_kernel_aarch64.o cpu_fp_lat_kernel_aarch64.o
